@@ -22,6 +22,10 @@ public class LoginPage {
         driver.findElement(LoginPageUI.LOGIN_BUTTON).click();
     }
 
+    public boolean displayErrorButton() {
+        return driver.findElement(LoginPageUI.ERROR_MESSAGE).isEnabled();
+    }
+
     public String getErrorMessage() {
         return driver.findElement(LoginPageUI.ERROR_MESSAGE).getText();
     }
