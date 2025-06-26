@@ -5,14 +5,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import unltils.Common;
+import unltils.CommonLogin;
 import unltils.ExcelUntils;
 
 import java.util.List;
 import java.util.Map;
 
-public class LoginTest extends Common {
-    LoginPage loginPage = new LoginPage(driver);
+public class LoginTest extends CommonLogin {
+    public LoginPage loginPage = new LoginPage(driver);
     String excelFilePath = "dataLogin.xlsx";
 
     @BeforeMethod
@@ -49,7 +49,6 @@ public class LoginTest extends Common {
 
         Assert.assertTrue(loginPage.isLogoDisplayed(), "Logo is not displayed!");
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html", "Login failed!");
-        ;
         Assert.assertTrue(loginPage.getInventoryItemCount() > 0, "Login failed!");
     }
 

@@ -18,6 +18,10 @@ public class LoginPage {
         driver.findElement(ui.LoginPageUI.PASSWORD_FIELD).sendKeys(password);
     }
 
+    public boolean isLoginButtonEnabled() {
+        return driver.findElement(LoginPageUI.LOGIN_BUTTON).isEnabled();
+    }
+
     public void clickLogin() {
         driver.findElement(LoginPageUI.LOGIN_BUTTON).click();
     }
