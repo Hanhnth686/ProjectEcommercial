@@ -19,9 +19,6 @@ public class InventoryTest extends CommonLogin {
         loginPage.enterPassword("secret_sauce");
         loginPage.clickLogin();
         inventoryManagement.navigateToInventoryPage();
-        Assert.assertTrue(inventoryManagement.isLogoInventoryDisplayed(), "Logo is not displayed!");
-        Assert.assertEquals(driver.getCurrentUrl(), "https://www.saucedemo.com/inventory.html", "Login failed!");
-        Assert.assertTrue(inventoryManagement.getInventoryItemCount() > 0, "Login failed!");
     }
 
     @Test

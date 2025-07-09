@@ -11,12 +11,14 @@ import unltils.CommonCart;
 public class CartTest extends CommonCart {
     LoginPage loginPage;
     InventoryManagement inventoryManagement;
+
     Cart cart = new Cart(driver);
 
     @BeforeMethod
     public void setupPage() {
         cart = new Cart(driver);
         loginPage = new LoginPage(driver);
+        inventoryManagement = new InventoryManagement(driver);
         loginPage.enterUsername("standard_user");
         loginPage.enterPassword("secret_sauce");
         loginPage.clickLogin();

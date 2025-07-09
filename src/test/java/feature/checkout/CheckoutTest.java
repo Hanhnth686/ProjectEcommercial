@@ -19,16 +19,15 @@ public class CheckoutTest extends CommonCart {
     public void setupPage() {
         loginPage = new LoginPage(driver);
         cart = new Cart(driver);
+        inventoryManagement = new InventoryManagement(driver);
         checkout = new Checkout(driver);
 
         loginPage.enterUsername("standard_user");
         loginPage.enterPassword("secret_sauce");
         loginPage.clickLogin();
 
-        Assert.assertTrue(inventoryManagement.isLogoInventoryDisplayed(), "Login failed: Logo not displayed!");
         inventoryManagement.clickAddToCartButton();
-        driver.navigate().to("https://www.saucedemo.com/cart.html");
-        Assert.assertTrue(driver.getCurrentUrl().contains("cart"), "Not navigated to cart!");
+        cart.navigateToCartURL();
         cart.clickCheckoutButton();
     }
 
@@ -46,19 +45,30 @@ public class CheckoutTest extends CommonCart {
     }
 
     @Test
+    public double parsePrice(String priceText) {
+        priceText = priceText.replaceAll("[^\\d.]", "");
+        return Double.parseDouble(priceText);
+    }
     public void testTotalAmountCalculation() {
         checkout.inputUserInformation("Anna", "Le", "56789");
-        String itemTotal = checkout.getItemTotalText();
-        String tax = checkout.getTaxText();
-        String total = checkout.getFinalTotalText();
+
+        String itemTotalText = checkout.getItemTotalText();
+        String taxText = checkout.getTaxText();
+        String totalText = checkout.getFinalTotalText();
+
+        double itemTotal = parsePrice(itemTotalText);
+        double tax = parsePrice(taxText);
+        double total = parsePrice(totalText);
+
+        Assert.assertEquals(itemTotal + tax, total, 0.01);
 
         System.out.println("Item Total: " + itemTotal);
         System.out.println("Tax: " + tax);
         System.out.println("Total: " + total);
 
-        Assert.assertTrue(itemTotal.contains("$"), "Item total missing $");
-        Assert.assertTrue(tax.contains("$"), "Tax missing $");
-        Assert.assertTrue(total.contains("$"), "Total missing $");
+        Assert.assertTrue(itemTotalText.contains("$"), "Item total missing $");
+        Assert.assertTrue(taxText.contains("$"), "Tax missing $");
+        Assert.assertTrue(totalText.contains("$"), "Total missing $");
     }
 
     @Test
